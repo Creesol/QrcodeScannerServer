@@ -134,12 +134,12 @@ app.post('/postMacAddressAndQrcode', function (req, res) {
 });
 //Added Post qr code data for admin by kashif zahid
  app.post('/postQrCode', function (req, res) {
-     console.log(req.body.value.length+"----------------------------------------------------------------------------");
+     console.log(req.body.length+"----------------------------------------------------------------------------");
 
-        for (var i = 0; i < req.body.value.length; i++) {
+        for (var i = 0; i < req.body.length; i++) {
 
 
-            var postQrCodequery = "Insert into product_info(product_qr_code_id) values(" + req.body.value[i].qrcode + ")";
+            var postQrCodequery = "Insert into product_info(product_qr_code_id) values(" + req.body[i].qrcode + ")";
             con.getConnection(function (err, connection) {
 
 

@@ -183,6 +183,7 @@ app.get('/getDistintMacaddressCount', function (req, res) {
 
         connection.query(query2, function (err, result) {
             //connection.release();
+            console.log(result);
                res.json(result[0]);
         });
 

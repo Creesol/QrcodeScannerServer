@@ -100,7 +100,7 @@ app.get('/getValidityofQrcode', function (req, res) {
         connection.query(query, function (err, result) {
             //connection.release();
             console.log(result);
-            res.json(result);
+            res.json(result[0]);
         });
 
         connection.on('error', function (err) {

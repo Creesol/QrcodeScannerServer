@@ -134,6 +134,7 @@ app.post('/postMacAddressAndQrcode', function (req, res) {
 });
 //Added Post qr code data for admin by kashif zahid
  app.post('/postQrCode', function (req, res) {
+     console.log(value.length);
 
         for (var i = 0; i < req.body.value.length; i++) {
 

@@ -110,7 +110,8 @@ app.post('/getValidityofQrcode', function (req, res) {
 });
 
 app.get('/postMacAddressAndQrcode', function (req, res) {
-    var query = "Insert into QRcodeScanner.user_info(macAddress, date, _product_qr_code) values(" + mysql.escape(req.query.macAddress) + "," + mysql.escape(req.query.date) + "," + mysql.escape(req.query._product_qr_code) + ")";
+    var query = "Insert into QRcodeScanner.user_info(macAddress, _product_qr_code) values(" + mysql.escape(req.query.macAddress)+"," + mysql.escape(req.query._product_qr_code) + ")";
+    //var query = "Insert into QRcodeScanner.user_info(macAddress, date, _product_qr_code) values(" + mysql.escape(req.query.macAddress) + "," + mysql.escape(req.query.date) + "," + mysql.escape(req.query._product_qr_code) + ")";
     con.getConnection(function (err, connection) {
         if (err) {
             res.json({ "code": 100, "status": "Error in connection database" });

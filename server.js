@@ -172,7 +172,7 @@ app.get('/postMacAddressAndQrcode', function (req, res) {
 
 
 app.get('/getDistintMacaddressCount', function (req, res) {
-    var query2 = "select count(distinct macAddress) AS total from QRcodeScanner.user_info where _product_qr_code = "+ mysql.escape(req.body._product_qr_code);
+    var query2 = "select count(distinct macAddress) AS total from QRcodeScanner.user_info where _product_qr_code = "+ mysql.escape(req.query._product_qr_code);
     con.getConnection(function (err, connection) {
         if (err) {
             res.json({ "code": 100, "status": "Error in connection database" });

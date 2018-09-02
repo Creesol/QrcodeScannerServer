@@ -22,7 +22,7 @@ var pool = mysql.createPool({
     connectTimeout: 30000,
     acquireTimeout: 30000
 });
-/*
+
 exports.handler = (event, context, callback) => {
     context.callbackWaitsForEmptyEventLoop = false;
     con.connect(function(err){
@@ -38,27 +38,8 @@ exports.handler = (event, context, callback) => {
             con.end();
         });
 };
-*/
-exports.handler =  (event, context, callback) => {
-    //prevent timeout from waiting event loop
-    context.callbackWaitsForEmptyEventLoop = false;
-    var items = "select * from category_detail" ;
 
-    con.query(items, function (err, result) {
-        console.log("runnning");
-        if (err) {
-            console.log(err);
-            res.end();
-        }
-        console.log(result);
-        console.log(result[0].item_id);
-        
-        //res.send([{ "name": result[0].item_name, "image": result[0].itemname, "quantity": "1", "description": result[0].description, "price": result[0].updated_price, "measuring_unit": result[0].measuringunit }, { "name": 1, "image": "R.drawable.milk__", "quantity": "1", "description": "any thing", "price": "120", "measuring_unit": "litre" }, { "name": 1, "image": "R.drawable.milk__", "quantity": "1", "description": "any thing", "price": "120", "measuring_unit": "litre" }, { "name": 1, "image": "R.drawable.milk__", "quantity": "1", "description": "any thing", "price": "120", "measuring_unit": "litre" }, { "name": 1, "image": "R.drawable.milk__", "quantity": "1", "description": "any thing", "price": "120", "measuring_unit": "litre" }]);
-        res.send(result);
-        
-    })
-    
-  };
+
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());

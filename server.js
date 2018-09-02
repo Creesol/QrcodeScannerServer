@@ -110,7 +110,7 @@ app.post('/getValidityofQrcode', function (req, res) {
 });
 
 app.post('/postMacAddressAndQrcode', function (req, res) {
-    var query = "Insert into user_info(macAddress, _product_qr_code) values(" + req.body.mac_address + "," + req.body.qrcode + ")";
+    var query = "Insert into QRcodeScanner.user_info(macAddress, _product_qr_code) values(" + req.body.mac_address + "," + req.body.qrcode + ")";
     con.getConnection(function (err, connection) {
         if (err) {
             res.json({ "code": 100, "status": "Error in connection database" });

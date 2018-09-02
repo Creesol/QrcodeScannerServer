@@ -109,7 +109,7 @@ app.post('/getValidityofQrcode', function (req, res) {
     });
 });
 
-app.post('/postMacAddressAndQrcode', function (req, res) {
+app.get('/postMacAddressAndQrcode', function (req, res) {
     var query = "Insert into QRcodeScanner.user_info(macAddress, _product_qr_code) values(" + req.query.mac_address + "," + req.query.qrcode + ")";
     con.getConnection(function (err, connection) {
         if (err) {

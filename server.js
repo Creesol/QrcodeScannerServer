@@ -12,7 +12,7 @@ var FCM = require('fcm-push');
 var serverKey = 'AAAASgtMh-o:APA91bHlJlpKoH6Kk_hU4lWcMBOSYGwpg9fAQc1sT9KEZuTv6HeF6oaYGurT8yLzNqxAa30AP4NnLRWccYYshyU4OBFhpBx5USGMlKg0VYzzHXKnAwWAtMCddpMEWu0vAlVwgiaphzuOC3tBSXUAoGZduA6IMqIsug';
 var fcm = new FCM(serverKey);
 
-var pool = mysql.createPool({
+var con = mysql.createPool({
     host: 'qrcodescanner.coqa2ghc5ipd.us-east-2.rds.amazonaws.com',
     user: 'qrcodescanner',
     password: 'qrcodescanner',

@@ -122,7 +122,7 @@ app.post('/postMacAddressAndQrcode', function (req, res) {
         connection.query(query, function (err, result) {
             //connection.release();
             if(!err){
-                
+                console.log("inserted");
             }
         });
 

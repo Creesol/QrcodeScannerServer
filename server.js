@@ -143,7 +143,7 @@ app.post('/getDistintMacaddressCount', function (req, res) {
 
         console.log('connected as id ' + connection.threadId);
 
-        connection.query(query, function (err, result) {
+        connection.query(query2, function (err, result) {
             //connection.release();
                res.json(result);
         });

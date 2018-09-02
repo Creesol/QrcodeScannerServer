@@ -132,6 +132,38 @@ app.post('/postMacAddressAndQrcode', function (req, res) {
         });
     });
 });
+//Added Post qr code data for admin by kashif zahid
+ app.post('/postQrCode', function (req, res) {
+
+        for (var i = 0; i < req.body.value.length; i++) {
+
+
+            var postQrCodequery = "Insert into product_info(product_qr_code_id) values(" + req.body.value[i].qrcode + ")";
+            con.getConnection(function (err, connection) {
+
+
+                console.log('connected as id ' + connection.threadId);
+
+                connection.query(postQrCodequery, function (err, result) {
+                    //connection.release();
+                    if (!err) {
+
+
+                    }
+
+                });
+
+                connection.on('error', function (err) {
+                    res.json({ "code": 100, "status": "Error in connection database" });
+                    return;
+                });
+            });
+        }
+})
+
+//edited by kashif
+
+
 
 app.post('/getDistintMacaddressCount', function (req, res) {
     var query2 = "select count(distinct macAddress) AS total from QRcodeScanner.user_info where _product_qr_code = "+ mysql.escape(req.body.qrcode);

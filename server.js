@@ -16,7 +16,7 @@ var pool = mysql.createPool({
     host: 'qrcodescanner.coqa2ghc5ipd.us-east-2.rds.amazonaws.com',
     user: 'qrcodescanner',
     password: 'qrcodescanner',
-    database: '', 
+    database: 'QRcodeScanner', 
     port: 3306,
     debug: true,
     connectTimeout: 30000,
@@ -98,6 +98,10 @@ function handle_database(query,req,res) {
 app.get('/handle', function(req,res){
     var query = "select * from category_detail";
     handle_database(query, req, res);
+});
+
+app.get('/h', function(req,res){
+    console.log("abc");
 });
 
 app.post('/getValidityofQrcode', function (req, res) {

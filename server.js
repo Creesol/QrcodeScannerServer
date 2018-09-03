@@ -118,6 +118,7 @@ app.get('/getUserByDate', function (req, res) {
                     if(!err){
                         console.log("inserted");
                         data.push(result[0]);
+                        res.json(data);
                 
                 
             }

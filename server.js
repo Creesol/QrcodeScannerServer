@@ -42,8 +42,8 @@ exports.handler = (event, context, callback) => {
 
 
 
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({limit: '10mb', extended: true}));
+app.use(bodyParser.json({limit: '10mb', extended: true}));
 app.listen(PORT, function (err) {
     if (err) {
         console.log("error" + err);

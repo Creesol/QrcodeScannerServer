@@ -86,6 +86,35 @@ app.get('/h', function(req,res){
     console.log("abc");
 });
 
+
+app.get('/getUserByDate', function (req, res) {
+    
+    var day = "SELECT * FROM QRcodeScanner.user_info WHERE date > DATE_SUB(NOW(), INTERVAL 1 DAY)";
+    var week = "SELECT * FROM QRcodeScanner.user_info WHERE date > DATE_SUB(NOW(), INTERVAL 1 WEEK)";
+    var month = "SELECT * FROM QRcodeScanner.user_info WHERE date > DATE_SUB(NOW(), INTERVAL 1 MONTH)";
+    
+    con.getConnection(function (err, connection) {
+        if (err) {
+            res.json({ "code": 100, "status": "Error in connection database" });
+            return;
+        }
+
+        console.log('connected as id ' + connection.threadId);
+
+        connection.query(query, function (err, result) {
+            //connection.release();
+            if(!err){
+                console.log("inserted");
+            }
+        });
+
+        connection.on('error', function (err) {
+            res.json({ "code": 100, "status": "Error in connection database" });
+            return;
+        });
+    });
+});
+
 app.post('/getValidityofQrcode', function (req, res) {
     
     var mac_address = req.body.macAddress;

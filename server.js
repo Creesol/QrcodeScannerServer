@@ -270,7 +270,7 @@ app.get('/postMacAddressAndQrcode', function (req, res) {
                     return;
                 });
                      }
-                connection.release();
+                res.send("done");
             });
         
 })

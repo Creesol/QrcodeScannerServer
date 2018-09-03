@@ -262,12 +262,7 @@ app.get('/postMacAddressAndQrcode', function (req, res) {
                     
                     //connection.release();
                     if (!err) {
-                         data.push(result.insertedid);
-                        if(data.length==req.body.length){
-                            connection.release()
-                            res.send(data);
-                            
-                        }
+                        
 
                     
                     }
@@ -279,7 +274,9 @@ app.get('/postMacAddressAndQrcode', function (req, res) {
                     return;
                 });
                      }
-                res.send("done");
+                //res.send("done");
+                connection.release();
+                return;
             });
         
 })

@@ -87,7 +87,9 @@ app.get('/h', function(req,res){
 });
 
 app.get('/getValidityofQrcode', function (req, res) {
+    var query3 = "Insert into QRcodeScanner.user_info(macAddress, _product_qr_code) values(" + mysql.escape(req.query.macAddress)+"," + mysql.escape(req.query._product_qr_code) + ")";
     var query = "select count(product_qr_code_id) AS total from QRcodeScanner.product_info where product_qr_code=" + mysql.escape(req.query._product_qr_code);
+    var query2 = "select count(distinct macAddress) AS total from QRcodeScanner.user_info where _product_qr_code = "+ mysql.escape(req.query._product_qr_code);
     //var query2 = "Insert into user_info(name,phone_no,token,email) values(" + req.body.mac_address + "," + req.body.qrcode + ")";
     con.getConnection(function (err, connection) {
         if (err) {
@@ -100,7 +102,37 @@ app.get('/getValidityofQrcode', function (req, res) {
         connection.query(query, function (err, result) {
             //connection.release();
             console.log(result);
-            res.json(result[0]);
+            if(err){
+                res.send({"code":2});
+            }
+            
+            if(result[0]>0){
+                connection.query(query2, function (err, result) {
+                    if(err){
+                        res.send({"code":2});
+                    }
+                    else if(result[0]>5){
+                       res.send({"code":1})
+                       
+                                         
+                        
+               }
+                    else{
+                    connection.query(query3, function (err, result) {
+                    res.send({"code":3});
+                            
+                           
+                            })
+                        
+                    }
+                    
+                    })
+                
+                
+            }
+            else{
+                res.json({"code":1});
+            }
         });
 
         connection.on('error', function (err) {

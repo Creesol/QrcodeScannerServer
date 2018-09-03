@@ -266,8 +266,11 @@ app.get('/postMacAddressAndQrcode', function (req, res) {
                         
                     data.push(result.insertedid);
                         if(data.length==req.body.length){
+                            
                             connection.release();
+                            console.log(con._freeConnections.indexOf(connection));
                             res.send([{"code":1}]);
+                            console.log(con._freeConnections.indexOf(connection));
                         }
                     
                     }

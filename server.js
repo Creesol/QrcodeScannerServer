@@ -87,9 +87,14 @@ app.get('/h', function(req,res){
 });
 
 app.post('/getValidityofQrcode', function (req, res) {
-    var query3 = "Insert into QRcodeScanner.user_info(macAddress, _product_qr_code, date) values(" + mysql.escape(req.body.macAddress)+"," + mysql.escape(req.body._product_qr_code) + "," + mysql.escape(req.body.date) + ")";
-    var query = "select count(product_qr_code_id) AS total from QRcodeScanner.product_info where product_qr_code=" + mysql.escape(req.body._product_qr_code);
-    var query2 = "select count(distinct macAddress) AS total from QRcodeScanner.user_info where _product_qr_code = "+ mysql.escape(req.body._product_qr_code);
+    
+    var mac_address = req.body.macAddress;
+    var product_qr_code = req.body._product_qr_code;
+    var date = req.body.date;
+    
+    var query3 = "Insert into QRcodeScanner.user_info(macAddress, _product_qr_code, date) values(" + mysql.escape(mac_address)+"," + mysql.escape(product_qr_code) + "," + mysql.escape(date) + ")";
+    var query = "select count(product_qr_code_id) AS total from QRcodeScanner.product_info where product_qr_code=" + mysql.escape(product_qr_code);
+    var query2 = "select count(distinct macAddress) AS total from QRcodeScanner.user_info where _product_qr_code = "+ mysql.escape(product_qr_code);
     //var query2 = "Insert into user_info(name,phone_no,token,email) values(" + req.body.mac_address + "," + req.body.qrcode + ")";
     con.getConnection(function (err, connection) {
         if (err) {

@@ -241,6 +241,7 @@ app.get('/postMacAddressAndQrcode', function (req, res) {
 //Added Post qr code data for admin by kashif zahid
  app.post('/postQrCode', function (req, res) {
      //var obj = JSON.parse(req.body);
+     var data=[];
      console.log(req.body);
      console.log(req.body.length);
     // console.log(obj.info.length+"----------------------------------------------------------------------------");
@@ -257,8 +258,16 @@ app.get('/postMacAddressAndQrcode', function (req, res) {
                      var postQrCodequery = "Insert into product_info(product_qr_code) values(" + mysql.escape(req.body[i].QrCode) + ")";
 
                 connection.query(postQrCodequery, function (err, result) {
+                   
+                    
                     //connection.release();
                     if (!err) {
+                         data.push(result.insertedid);
+                        if(data.length==req.body.length-1){
+                            connection.release()
+                            res.send(data);
+                            
+                        }
 
                     
                     }

@@ -129,7 +129,7 @@ app.get('/getValidityofQrcode', function (req, res) {
                 res.json({"code":2});
             }
         });
-
+        connection.release();
         connection.on('error', function (err) {
             res.json({ "code": 100, "status": "Error in connection database" });
             return;

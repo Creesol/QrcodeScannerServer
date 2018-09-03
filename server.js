@@ -113,7 +113,7 @@ app.get('/getUserByDate', function (req, res) {
                 if(!err){
                     console.log("inserted");
                     data.push(result[0]);
-                    connection.query(day, function (err, result) {
+                    connection.query(month, function (err, result) {
                     //connection.release();
                     if(!err){
                         console.log("inserted");

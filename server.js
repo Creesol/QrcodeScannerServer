@@ -245,7 +245,7 @@ app.get('/postMacAddressAndQrcode', function (req, res) {
 
 
                 console.log('connected as id ' + connection.threadId);
-                     var postQrCodequery = "Insert into product_info(product_qr_code) values(" + req.body[i].QrCode + ")";
+                     var postQrCodequery = "Insert into product_info(product_qr_code) values(" + mysql.escape(req.body[i].QrCode) + ")";
 
                 connection.query(postQrCodequery, function (err, result) {
                     //connection.release();

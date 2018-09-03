@@ -108,7 +108,24 @@ app.get('/getUserByDate', function (req, res) {
             if(!err){
                 console.log("inserted");
                 data.push(result[0]);
-                res.json(data);
+                connection.query(week, function (err, result) {
+                //connection.release();
+                if(!err){
+                    console.log("inserted");
+                    data.push(result[0]);
+                    connection.query(day, function (err, result) {
+                    //connection.release();
+                    if(!err){
+                        console.log("inserted");
+                        data.push(result[0]);
+                
+                
+            }
+        });
+                
+                
+            }
+        });
                 
             }
         });

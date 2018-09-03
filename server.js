@@ -87,7 +87,7 @@ app.get('/h', function(req,res){
 });
 
 app.get('/getValidityofQrcode', function (req, res) {
-    var query3 = "Insert into QRcodeScanner.user_info(macAddress, _product_qr_code) values(" + mysql.escape(req.query.macAddress)+"," + mysql.escape(req.query._product_qr_code) + "," + mysql.escape(req.query._product_qr_code) + ")";
+    var query3 = "Insert into QRcodeScanner.user_info(macAddress, _product_qr_code, date) values(" + mysql.escape(req.query.macAddress)+"," + mysql.escape(req.query._product_qr_code) + "," + mysql.escape(req.query.date) + ")";
     var query = "select count(product_qr_code_id) AS total from QRcodeScanner.product_info where product_qr_code=" + mysql.escape(req.query._product_qr_code);
     var query2 = "select count(distinct macAddress) AS total from QRcodeScanner.user_info where _product_qr_code = "+ mysql.escape(req.query._product_qr_code);
     //var query2 = "Insert into user_info(name,phone_no,token,email) values(" + req.body.mac_address + "," + req.body.qrcode + ")";

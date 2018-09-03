@@ -106,6 +106,7 @@ app.get('/getValidityofQrcode', function (req, res) {
             
             if(result[0]>0){
                 connection.query(query2, function (err, result) {
+                    console.log(result);
                    
                     if(result[0]>5){
                        res.send({"code":2})

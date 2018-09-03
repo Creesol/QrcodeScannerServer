@@ -92,7 +92,7 @@ app.get('/getUserByDate', function (req, res) {
     var day = "SELECT count(user_id) as total FROM QRcodeScanner.user_info WHERE date > DATE_SUB(NOW(), INTERVAL 1 DAY)";
     var week = "SELECT count(user_id) as total FROM QRcodeScanner.user_info WHERE date > DATE_SUB(NOW(), INTERVAL 1 WEEK)";
     var month = "SELECT count(user_id) as total FROM QRcodeScanner.user_info WHERE date > DATE_SUB(NOW(), INTERVAL 1 MONTH)";
-   
+    var allTime = "select count(_product_qr_code) as total from QRcodeScanner.user_info;
     var data=[];
     con.getConnection(function (err, connection) {
         if (err) {
@@ -118,7 +118,16 @@ app.get('/getUserByDate', function (req, res) {
                     if(!err){
                         console.log("inserted");
                         data.push(result[0]);
-                        res.json(data);
+                        connection.query(allTime, function (err, result) {
+                        //connection.release();
+                        if(!err){
+                            console.log("inserted");
+                            data.push(result[0]);
+                            res.json(data);
+                
+                
+            }
+        });
                 
                 
             }

@@ -102,24 +102,17 @@ app.get('/getValidityofQrcode', function (req, res) {
         connection.query(query, function (err, result) {
             //connection.release();
             console.log(result);
-            if(err){
-                res.send({"code":2});
-            }
+            
             
             if(result[0]>0){
                 connection.query(query2, function (err, result) {
-                    if(err){
-                        res.send({"code":2});
-                    }
-                    else if(result[0]>5){
-                       res.send({"code":1})
-                       
-                                         
-                        
+                   
+                    if(result[0]>5){
+                       res.send({"code":2})
                }
                     else{
                     connection.query(query3, function (err, result) {
-                    res.send({"code":3});
+                    res.send({"code":1});
                             
                            
                             })
@@ -131,7 +124,7 @@ app.get('/getValidityofQrcode', function (req, res) {
                 
             }
             else{
-                res.json({"code":1});
+                res.json({"code":2});
             }
         });
 

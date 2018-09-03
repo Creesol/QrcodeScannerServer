@@ -147,7 +147,7 @@ app.get('/getUserByDate', function (req, res) {
     });
 });
 app.get('/getTotalqr',function(req,res){
-    var query="select count(product_qr_code_id) AS Total from QRcodeScanner.product_info";
+    var query="select count(product_qr_code) AS Total from QRcodeScanner.product_info";
     con.getConnection(function(err,connection){
         connection.query(query, function (err, result) {
             res.send(result);

@@ -164,8 +164,9 @@ app.get('/postMacAddressAndQrcode', function (req, res) {
                     res.json({ "code": 100, "status": "Error in connection database" });
                     return;
                 });
+                     }
             });
-        }
+        
 })
 
 //edited by kashif

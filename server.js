@@ -144,12 +144,13 @@ app.get('/postMacAddressAndQrcode', function (req, res) {
        
 
 
-            var postQrCodequery = "Insert into product_info(product_qr_code_id) values(" + req.body[i].QrCode + ")";
+            
             con.getConnection(function (err, connection) {
                  for (var i = 0; i < req.body.length; i++) {
 
 
                 console.log('connected as id ' + connection.threadId);
+                     var postQrCodequery = "Insert into product_info(product_qr_code_id) values(" + req.body[i].QrCode + ")";
 
                 connection.query(postQrCodequery, function (err, result) {
                     //connection.release();

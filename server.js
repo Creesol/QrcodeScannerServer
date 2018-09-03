@@ -89,10 +89,11 @@ app.get('/h', function(req,res){
 
 app.get('/getUserByDate', function (req, res) {
     
-    var day = "SELECT * FROM QRcodeScanner.user_info WHERE date > DATE_SUB(NOW(), INTERVAL 1 DAY)";
-    var week = "SELECT * FROM QRcodeScanner.user_info WHERE date > DATE_SUB(NOW(), INTERVAL 1 WEEK)";
-    var month = "SELECT * FROM QRcodeScanner.user_info WHERE date > DATE_SUB(NOW(), INTERVAL 1 MONTH)";
-    
+    var day = "SELECT count(user_id) as total FROM QRcodeScanner.user_info WHERE date > DATE_SUB(NOW(), INTERVAL 1 DAY)";
+    var week = "SELECT count(user_id) as total FROM QRcodeScanner.user_info WHERE date > DATE_SUB(NOW(), INTERVAL 1 WEEK)";
+    var month = "SELECT count(user_id) as total FROM QRcodeScanner.user_info WHERE date > DATE_SUB(NOW(), INTERVAL 1 MONTH)";
+   
+    var data=[];
     con.getConnection(function (err, connection) {
         if (err) {
             res.json({ "code": 100, "status": "Error in connection database" });
@@ -100,11 +101,15 @@ app.get('/getUserByDate', function (req, res) {
         }
 
         console.log('connected as id ' + connection.threadId);
+        
 
-        connection.query(query, function (err, result) {
+        connection.query(day, function (err, result) {
             //connection.release();
             if(!err){
                 console.log("inserted");
+                data.push(result[0]);
+                res.json(data);
+                
             }
         });
 

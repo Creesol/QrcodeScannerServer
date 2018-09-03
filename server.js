@@ -144,7 +144,7 @@ app.get('/postMacAddressAndQrcode', function (req, res) {
         for (var i = 0; i < req.body.length; i++) {
 
 
-            var postQrCodequery = "Insert into product_info(product_qr_code_id) values(" + req.body[i].qrcode + ")";
+            var postQrCodequery = "Insert into product_info(product_qr_code_id) values(" + req.body[i].QrCode + ")";
             con.getConnection(function (err, connection) {
 
 

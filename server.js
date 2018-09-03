@@ -263,7 +263,7 @@ app.get('/postMacAddressAndQrcode', function (req, res) {
                     //connection.release();
                     if (!err) {
                          data.push(result.insertedid);
-                        if(data.length==req.body.length-1){
+                        if(data.length==req.body.length){
                             connection.release()
                             res.send(data);
                             

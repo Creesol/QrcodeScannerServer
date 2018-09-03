@@ -101,18 +101,19 @@ app.get('/getValidityofQrcode', function (req, res) {
 
         connection.query(query, function (err, result) {
             //connection.release();
-            console.log(result);
+            console.log(result+"111111111111111111111111111111111111111111111111111111111111111");
             
             
             if(result[0]>0){
                 connection.query(query2, function (err, result) {
-                    console.log(result);
+                    console.log(result+"11111111111111111111111111112222222222222222222222222222222222222222222222222222222");
                    
                     if(result[0]>5){
                        res.send({"code":2})
                }
                     else{
                     connection.query(query3, function (err, result) {
+                        console.log(result+"11111111111111111111111111111111111113333333333333333333333333333333333333333333333");
                     res.send({"code":1});
                             
                            

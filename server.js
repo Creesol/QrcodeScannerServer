@@ -185,7 +185,7 @@ app.post('/getValidityofQrcode', function (req, res) {
                 connection.query(query2, function (err, result) {
                    
                    
-                    if(result[0].total>5){
+                    if(result[0].total>4){
                        res.send({"code":2})
                }
                     else{
@@ -253,6 +253,7 @@ app.get('/postMacAddressAndQrcode', function (req, res) {
             
             con.getConnection(function (err, connection) {
                  for (var i = 0; i < req.body.length; i++) {
+                     
 
 
                 console.log('connected as id ' + connection.threadId);
@@ -260,18 +261,20 @@ app.get('/postMacAddressAndQrcode', function (req, res) {
 
                 connection.query(postQrCodequery, function (err, result) {
                    
-                    
-                    //connection.release();
-                    if (!err) {
-                        
-                    data.push(result.insertedid);
-                        if(data.length==req.body.length){
+                    data.push(i);
+                    if(data.length==req.body.length){
                             console.log(con._freeConnections.indexOf(connection));
                             connection.release();
                             
                             res.send([{"code":1}]);
                             console.log(con._freeConnections.indexOf(connection));
                         }
+                    
+                    //connection.release();
+                    if (!err) {
+                        
+                    //data.push(result.insertedid);
+                        i
                     
                     }
 

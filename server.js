@@ -6,6 +6,11 @@ const url = require('url');
 const querystring = require('querystring'); 
 const mysql = require('mysql');
 const admin = require('firebase-admin');
+var fs = require('fs');
+var XLSX = require('xlsx');
+var upload = require('express-fileupload');
+var http = require('http');
+var util = require('util');
 
 var FCM = require('fcm-push');
 
@@ -44,6 +49,7 @@ exports.handler = (event, context, callback) => {
 
 app.use(bodyParser.urlencoded({limit: '10mb', extended: true}));
 app.use(bodyParser.json({limit: '10mb', extended: true}));
+app.use(upload());
 app.listen(PORT, function (err) {
     if (err) {
         console.log("error" + err);
@@ -239,30 +245,92 @@ app.get('/postMacAddressAndQrcode', function (req, res) {
     });
 });
 //Added Post qr code data for admin by kashif zahid
- app.post('/postQrCode', function (req, res) {
+app.post('/postQrCode', function (req, res) {
      //var obj = JSON.parse(req.body);
-     var data=[];
-     console.log(req.body);
-     console.log(req.body.length);
-    // console.log(obj.info.length+"----------------------------------------------------------------------------");
-     
+    
+     console.log("called");
+    
+   var file = req.files;
+    
+    res.send("execute");
+    getData(data);
+   
 
-       
+    
+   // res.end();
+});
 
 
+function getData(file){
+
+
+    if (file) {
+        //console.log(req.files.bill);
+        var workbook = XLSX.read(files.bill.data, { type: 'buffer' });
+
+
+        var sheet_name_list = workbook.SheetNames;
+        sheet_name_list.forEach(function (y) {
+            var worksheet = workbook.Sheets[y];
+            var headers = {};
+            var data = [];
+            for (z in worksheet) {
+                if (z[0] === '!') continue;
+                //parse out the column, row, and value
+                var tt = 0;
+                for (var i = 0; i < z.length; i++) {
+                    if (!isNaN(z[i])) {
+                        tt = i;
+                        break;
+                    }
+                };
+                //var col = z.substring(0, tt);
+                var col = z.substring(0, 1);
+                var row = parseInt(z.substring(tt));
+                var value = worksheet[z].v;
+                var value2 = "QrCode";
+
+                //store header names
+                if (row == 1 && value) {
+                    if (col == "A") {
+                        headers[col] = value2;
+                    }
+                    console.log(col);
+                    
+                   
+                    continue;
+                } 
+
+
+
+                if (!data[row]) data[row] = {};
+                data[row][headers[col]] = value;
+            }
+            //drop those first two rows which are empty
+            data.shift();
+            data.shift();
+            console.log(data);
+            insertData(data);
+        })
+        }
+        }
+
+function insertData(data){
+    
+    var datas=[];
             
             con.getConnection(function (err, connection) {
-                 for (var i = 0; i < req.body.length; i++) {
+                 for (var i = 0; i < data.length; i++) {
                      
 
 
                 console.log('connected as id ' + connection.threadId);
-                     var postQrCodequery = "Insert into product_info(product_qr_code) values(" + mysql.escape(req.body[i].QrCode) + ")";
+                     var postQrCodequery = "Insert into product_info(product_qr_code) values(" + mysql.escape(data[i].QrCode) + ")";
 
                 connection.query(postQrCodequery, function (err, result) {
                    
-                    data.push(i);
-                    if(data.length==req.body.length){
+                    datas.push(i);
+                    if(datas.length==req.body.length){
                             console.log(con._freeConnections.indexOf(connection));
                             connection.release();
                             
@@ -288,8 +356,10 @@ app.get('/postMacAddressAndQrcode', function (req, res) {
                 //res.send("done");
                
             });
+}
+
         
-})
+
 
 //edited by kashif
 

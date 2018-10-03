@@ -245,15 +245,17 @@ app.get('/postMacAddressAndQrcode', function (req, res) {
     });
 });
 //Added Post qr code data for admin by kashif zahid
-app.post('/postQrCode', function (req, res) {
+app.post('/upload', function (req, res) {
      //var obj = JSON.parse(req.body);
     
-     console.log("called");
+    console.log("called");
+    console.log(req.files);
     
-   var file = req.files;
+  // var file = req.files;
+    var file = req;
     
     res.send("execute");
-    getData(data);
+    getData(req.files);
    
 
     
@@ -266,7 +268,7 @@ function getData(file){
 
     if (file) {
         //console.log(req.files.bill);
-        var workbook = XLSX.read(files.bill.data, { type: 'buffer' });
+        var workbook = XLSX.read(file.bill.data, { type: 'buffer' });
 
 
         var sheet_name_list = workbook.SheetNames;
@@ -330,11 +332,11 @@ function insertData(data){
                 connection.query(postQrCodequery, function (err, result) {
                    
                     datas.push(i);
-                    if(datas.length==req.body.length){
+                    if(datas.length==data.length){
                             console.log(con._freeConnections.indexOf(connection));
                             connection.release();
                             
-                            res.send([{"code":1}]);
+                           // res.send([{"code":1}]);
                             console.log(con._freeConnections.indexOf(connection));
                         }
                     

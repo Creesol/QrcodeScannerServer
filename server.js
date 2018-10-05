@@ -161,6 +161,30 @@ app.get('/getTotalqr',function(req,res){
         
     })
 })
+app.get('/checkedMoreThenOnce', function (req, res) {
+
+    var query = "SELECT count(macAddress),_product_qr_code FROM QRcodeScanner.user_info group by _product_qr_code having count(macAddress)>1";
+
+    con.getConnection(function (err, connection) {
+        connection.query(query, function (err, result) {
+            connection.release();
+            res.send(result);
+        })
+
+    })
+})
+app.get('/FakeRealStats', function (req, res) {
+
+    var query2 = "SELECT fake,counter.real,sum(fake+counter.real) as total FROM QRcodeScanner.counter";
+
+    con.getConnection(function (err, connection) {
+        connection.query(query2, function (err, result) {
+            connection.release();
+            res.send(result);
+        })
+
+    })
+})
 
 app.post('/getValidityofQrcode', function (req, res) {
     
@@ -168,7 +192,9 @@ app.post('/getValidityofQrcode', function (req, res) {
     var product_qr_code = req.body._product_qr_code;
     var date = req.body.date;
     
-    console.log(mac_address+" "+product_qr_code+" "+date);
+    console.log(mac_address + " " + product_qr_code + " " + date);
+    var fake = "UPDATE counter SET fake=fake+1 WHERE id=1";
+    var real = "UPDATE counter SET counter.real=counter.real+1 WHERE id=1";
     
     var query3 = "Insert into QRcodeScanner.user_info(macAddress, _product_qr_code, date) values(" + mysql.escape(mac_address)+"," + mysql.escape(product_qr_code) + "," + mysql.escape(date) + ")";
     var query = "select count(product_qr_code_id) AS total from QRcodeScanner.product_info where product_qr_code=" + mysql.escape(product_qr_code);
@@ -192,12 +218,24 @@ app.post('/getValidityofQrcode', function (req, res) {
                    
                    
                     if(result[0].total>4){
-                       res.send({"code":2})
+                        
+                        connection.query(fake, function (err, result) {
+
+                            res.send({ "code": 2 });
+
+
+                        })
                }
                     else{
                     connection.query(query3, function (err, result) {
                        
-                    res.send({"code":1});
+                        
+                        connection.query(real, function (err, result) {
+
+                            res.send({ "code": 1 });
+
+
+                        })
                             
                            
                             })
@@ -209,7 +247,12 @@ app.post('/getValidityofQrcode', function (req, res) {
                 
             }
             else{
-                res.json({"code":2});
+                connection.query(fake, function (err, result) {
+
+                    res.send({ "code": 2 });
+
+
+                })
             }
         });
         connection.release();

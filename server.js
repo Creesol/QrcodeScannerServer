@@ -163,7 +163,7 @@ app.get('/getTotalqr',function(req,res){
 })
 app.get('/checkedMoreThenOnce', function (req, res) {
 
-    var query = "SELECT count(distinct macAddress) as macAddr,_product_qr_code FROM QRcodeScanner.user_info group by _product_qr_code having count(macAddress)>1";
+    var query = "SELECT count(distinct macAddress) as macAddr,_product_qr_code FROM QRcodeScanner.user_info group by _product_qr_code having count(macAddress)>1 order by macAddr desc";
 
     con.getConnection(function (err, connection) {
         connection.query(query, function (err, result) {
